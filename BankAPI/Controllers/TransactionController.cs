@@ -25,12 +25,12 @@ namespace BankAPI.Controllers
         /// <param name="amount"></param>
         /// <returns></returns>
         [Route("DoTransaction")]
-        [HttpGet]
-        public bool DoTransaction(TransType transType,string accountId,decimal amount)
+        [HttpPost]
+        public object DoTransaction([FromBody] Transaction collection)
         {
-            if (!ModelState.IsValid) return false;
-            var account =_accountService.GetAccountById(accountId);
-           return _transactionService.DoTransaction(transType, account, amount);
+            if (!ModelState.IsValid) return BadRequest("Validation Failed");
+            var account = _accountService.GetAccountById(collection.AccountId);
+            return _transactionService.DoTransaction(collection.TransactionType, account, collection.TransactionAmount);
         }
     }
 }

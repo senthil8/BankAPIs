@@ -11,7 +11,7 @@ namespace BankAPI.Model
             Accounts = new List<Account>
             {
                 //Adding default account for testing
-                new Account() { UserId = "SEN100", AccountType = AccountType.Savings, Balance = 100, HolderName = "S" }
+                new Account() { UserId = "SEN100", AccountType = AccountType.Savings, Balance = 100, HolderName = "Senthil" }
             };
         }
 
@@ -23,7 +23,6 @@ namespace BankAPI.Model
         /// <returns></returns>
         public List<Account> AddAccount(Account account)
         {
-       
             Accounts.Add(account); //Add transaction right after this
 
             return Accounts;
@@ -60,6 +59,15 @@ namespace BankAPI.Model
             if (account == null) throw new ApplicationException("Account does not exist");
             return account;
         }
+
+        public bool IsAccountValid(string accountId)
+        {
+            //check the account is exists
+            var account = Accounts.FirstOrDefault(acc => acc.AccountId == accountId);
+            if (account == null) return false;
+            return true;
+        }
+
         /// <summary>
         /// Purpose: To get all the accounts for the user
         /// Created By/On : SK 06/2022
@@ -69,6 +77,19 @@ namespace BankAPI.Model
         public List<Account> GetAccounts(string userId)
         {
             return Accounts.Where(acc => acc.UserId == userId).ToList();
+        }
+
+        /// <summary>
+        /// Purpose: To check if give user id exists
+        /// Created By/On : SK 06/2022
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool IsUserIdExists(string userId)
+        {
+            bool isUserExists = Accounts.Any(item => item.UserId == userId);
+            if (!isUserExists) return false;
+            return true;            
         }
     }
 }

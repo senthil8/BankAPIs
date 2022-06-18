@@ -24,6 +24,8 @@ namespace BankAPI.Controllers
         [HttpGet]      
         public ActionResult<IEnumerable<object>> GetAccountsByUserId(string userId)
         {
+            if (!ModelState.IsValid) return BadRequest();
+            if(!_accountService.IsUserIdExists(userId)) return BadRequest("User id is not found");
             return _accountService.GetAccounts(userId);
         }
 
@@ -51,6 +53,7 @@ namespace BankAPI.Controllers
         [HttpDelete]
         public bool Delete(string accountId)
         {
+            if (!ModelState.IsValid) return false;
             return _accountService.DeleteAccount(accountId);
         }
     }

@@ -4,7 +4,7 @@ namespace BankAPI.Model.Interface
 {
     public interface ITransactionService
     {
-        public bool DoTransaction(TransType transType,Account account,decimal amount);
+        public string DoTransaction(TransType transType,Account account,decimal amount);
     }
 
 }
