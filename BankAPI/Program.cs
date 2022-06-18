@@ -3,7 +3,6 @@ using BankAPI.Model.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 // Add services to the container.
 builder.Services.AddSingleton<IAccountService, AccountService>();
 builder.Services.AddSingleton<ITransactionService, TransactionService>();
