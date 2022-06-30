@@ -1,5 +1,6 @@
 ﻿using BankAPI.Model.Entities;
 using BankAPI.Model.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankAPI.Controllers
@@ -21,7 +22,8 @@ namespace BankAPI.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [Route("GetAccountsByUserId/{userId}")]
-        [HttpGet]      
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<IEnumerable<object>> GetAccountsByUserId(string userId)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -37,6 +39,7 @@ namespace BankAPI.Controllers
         /// <returns></returns>
         [Route("AddAccount")]
         [HttpPost]
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<IEnumerable<object>> Create([FromBody] Account collection)
         {
             if (!ModelState.IsValid) return BadRequest(collection);
@@ -51,6 +54,7 @@ namespace BankAPI.Controllers
         /// <returns></returns>
         [Route("RemoveAccount/{accountId}")]
         [HttpDelete]
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
         public bool Delete(string accountId)
         {
             if (!ModelState.IsValid) return false;

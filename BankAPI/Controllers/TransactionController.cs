@@ -1,5 +1,6 @@
 ﻿using BankAPI.Model.Entities;
 using BankAPI.Model.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankAPI.Controllers
@@ -26,7 +27,8 @@ namespace BankAPI.Controllers
         /// <returns></returns>
         [Route("DoTransaction")]
         [HttpPost]
-        public object DoTransaction([FromBody] Transaction collection)
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+        public ActionResult<object> DoTransaction([FromBody] Transaction collection)
         {
             if (!ModelState.IsValid) return BadRequest("Validation Failed");
             var account = _accountService.GetAccountById(collection.AccountId);
